@@ -3,6 +3,8 @@ import re
 Test_Analizador_Sintactico = True
 Test_Analizador_Semantico = True
 
+# --- ANALIZADOR LEXICO ---
+
 class Token:
     def __init__(self, tipo, valor=None):
         self.tipo = tipo
@@ -51,6 +53,8 @@ class Lexer:
     def obtener_comentario(self):
         while self.posicion < len(self.codigo) and self.codigo[self.posicion] != "\n":
             self.posicion += 1
+
+# --- ANALIZADOR SINTACTICO ---
 
 class Analizador:
     def __init__(self, tokens):
@@ -118,6 +122,7 @@ class Analizador:
             Test_Analizador_Sintactico = False
             print(f"Se esperaba un token de tipo {tipo}")
 
+# --- ANALIZADOR SEMANTICO ---
 
 class AnalizadorSemantico:
     def __init__(self, declaraciones):
@@ -143,7 +148,7 @@ class AnalizadorSemantico:
 
 codigo = """
 x = 2
-y = x323 + 3
+y = x + 3
 z = (x + y) * 4
 """
 lexer = Lexer(codigo)
