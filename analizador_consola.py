@@ -2,7 +2,6 @@ import re
 
 Test_Analizador_Sintactico = True
 Test_Analizador_Semantico = True
-
 # --- ANALIZADOR LEXICO ---
 
 class Token:
@@ -148,7 +147,7 @@ class AnalizadorSemantico:
 
 codigo = """
 x = 2
-y = x + 3
+y { x + 3
 z = (x + y) * 4
 """
 lexer = Lexer(codigo)

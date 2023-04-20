@@ -8,8 +8,10 @@
 - termino       ➯ termino * factor | termino / factor | factor
 - factor        ➯ ENTERO | IDENTIFICADOR | ( expresion )
 
-Códico Fuente.
+### Códico Fuente.
 https://github.com/Gilberto-Guzman/Analizador_Lexico_Sintactico_Y_Semantico/blob/master/analizador.py  
+
+### Descripción.
 
 Este es un pequeño programa que implementa un analizador léxico, un analizador sintáctico y un analizador semántico. Su objetivo es analizar una serie de declaraciones de asignación de variables en un lenguaje de programación muy simple.
 
@@ -26,3 +28,8 @@ La clase AnalizadorSemantico implementa el analizador semántico. Se encarga de 
 El programa en sí mismo es bastante simple: después de definir dos variables booleanas Test_Analizador_Sintactico y Test_Analizador_Semantico (inicialmente ambas a True), define una cadena de código fuente que contiene dos declaraciones de asignación de variables. A continuación, crea un objeto Lexer y un objeto Analizador, y los utiliza para analizar el código fuente. Finalmente, crea un objeto AnalizadorSemantico y lo utiliza para realizar un análisis semántico del programa.
 
 Si durante el análisis sintáctico o semántico se encuentra algún error, las variables booleanas Test_Analizador_Sintactico y Test_Analizador_Semantico se establecen en False, y se muestra un mensaje de error por pantalla.
+
+### Ejemplos.
+    x = 2
+    y = x + 3
+    z = (x + y) * 4
