@@ -10,6 +10,10 @@ from PIL import Image
 # Activamos el modo claro
 customtkinter.set_appearance_mode("light")
 
+Test_Analizador_Sintactico = True
+Test_Analizador_Semantico = True
+Texto_Concatenado = ""
+
 class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
     def __init__(self):
         super().__init__()
@@ -94,11 +98,9 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
             corner_radius=10
         )
         self.label_resultados.place(relx=0.5, rely=0.9, anchor=tkinter.CENTER)
-    
+       
     def analizador_consola(self):
-        Test_Analizador_Sintactico = True
-        Test_Analizador_Semantico = True
-        
+
         
         # --- ANALIZADOR LEXICO ---
 
@@ -152,7 +154,6 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
                     self.posicion += 1
 
         # --- ANALIZADOR SINTACTICO ---
-
         class Analizador:
             def __init__(self, tokens):
                 self.tokens = tokens
@@ -204,10 +205,11 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
                     return expresion
                 else:
                     # raise Exception("Error de sintaxis")
-                    global Test_Analizador_Sintactico
-                    Test_Analizador_Sintactico = False
                     print("Error de sintaxis")
-
+                    global Texto_Concatenado
+                    Texto_Concatenado += "Error de sintaxis\n" 
+                    return Texto_Concatenado                  
+            
             def esperar(self, tipo):
                 if self.posicion < len(self.tokens) and self.tokens[self.posicion].tipo == tipo:
                     token = self.tokens[self.posicion]
@@ -215,9 +217,13 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
                     return token
                 else:
                     # raise Exception(f"Se esperaba un token de tipo {tipo}")
-                    global Test_Analizador_Sintactico
+                    global Test_Analizador_Sintactico 
                     Test_Analizador_Sintactico = False
+                    global Texto_Concatenado
+                    Texto_Concatenado += f"Se esperaba un token de tipo {tipo}\n"
                     print(f"Se esperaba un token de tipo {tipo}")
+                    return Test_Analizador_Sintactico, Texto_Concatenado
+    
 
         # --- ANALIZADOR SEMANTICO ---
 
@@ -241,8 +247,16 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
                     # raise Exception(f"Variable no declarada: {expresion}")
                     global Test_Analizador_Semantico 
                     Test_Analizador_Semantico = False
+                    global Texto_Concatenado
                     print(f"Variable no declarada: {expresion}")
+                    Texto_Concatenado += f"Variable no declarada: {expresion}"
+                    return Test_Analizador_Semantico, Texto_Concatenado
 
+        # codigo = """
+        # x = 2
+        # y = x + 3
+        # z = (x + y) * 4
+        # """
         codigo = self.textbox.get("1.0", tkinter.END).strip()
         lexer = Lexer(codigo)
         tokens = lexer.obtener_tokens()
@@ -250,14 +264,19 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
         declaraciones = analizador.analizar()
         analizador_semantico = AnalizadorSemantico(declaraciones)
         analizador_semantico.analizar()
-
+        global Texto_Concatenado 
         if Test_Analizador_Sintactico == True:
             print('Analisis Sintactico Exitoso')
+            Texto_Concatenado += 'Analisis Sintactico Exitoso\n'
         if Test_Analizador_Semantico == True:
             print('Analisis Semantico Exitoso')
-    
+            Texto_Concatenado += 'Analisis Semantico Exitoso\n'
+        self.label_resultados.configure(text=Texto_Concatenado)
+        
+        
     def limpiar_textbox(self):
         self.textbox.delete("1.0", "end")
+        self.label_resultados.configure(text="Resultados")
 
 if __name__ == "__main__":
     app = Analizador_Lexico_Sintactico_Y_Semantico()
