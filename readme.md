@@ -29,22 +29,32 @@ El programa en sí mismo es bastante simple: después de definir dos variables b
 
 Si durante el análisis sintáctico o semántico se encuentra algún error, las variables booleanas Test_Analizador_Sintactico y Test_Analizador_Semantico se establecen en False, y se muestra un mensaje de error por pantalla.
 
-### Ejemplos.
+### Ejemplo 1.
 
-- Analisis Sintactico Exitoso
-- Analisis Semantico Exitoso
     x = 2
     y = x + 3
     z = (x + y) * 4
 
-- Se esperaba un token de tipo =
-- Analisis Semantico Exitoso
+### Resultados:
+Analisis Sintactico Exitoso.  
+Analisis Semantico Exitoso.  
+
+### Ejemplo 2.
+
     x = 2
     y { x + 3
     z = (x + y) * 4
 
-- Variable no declarada: z
-- Analisis Sintactico Exitoso
+### Resultados:
+Se esperaba un token de tipo =  
+Analisis Semantico Exitoso.  
+
+### Ejemplo 3.
+
     x = 2
     y = z + 3
     z = (x + y) * 4
+
+### Resultados:    
+Variable no declarada: z  
+Analisis Sintactico Exitoso.  
