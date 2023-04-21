@@ -89,6 +89,7 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
         )
         self.btn_limpiar.place(relx=0.725, rely=0.63, anchor=tkinter.CENTER)      
 
+        # Etiqueta para mostrar los resultados en pantalla
         self.label_resultados = customtkinter.CTkLabel(
             master=self,
             text="Resultados",
@@ -100,10 +101,8 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
         self.label_resultados.place(relx=0.5, rely=0.9, anchor=tkinter.CENTER)
        
     def analizador_consola(self):
-
         
         # --- ANALIZADOR LEXICO ---
-
         class Token:
             def __init__(self, tipo, valor=None):
                 self.tipo = tipo
@@ -249,7 +248,7 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
                     Test_Analizador_Semantico = False
                     global Texto_Concatenado
                     print(f"Variable no declarada: {expresion}")
-                    Texto_Concatenado += f"Variable no declarada: {expresion}"
+                    Texto_Concatenado += f"Variable no declarada: {expresion}\n"
                     return Test_Analizador_Semantico, Texto_Concatenado
 
         # codigo = """
@@ -270,13 +269,16 @@ class Analizador_Lexico_Sintactico_Y_Semantico(customtkinter.CTk):
             Texto_Concatenado += 'Analisis Sintactico Exitoso\n'
         if Test_Analizador_Semantico == True:
             print('Analisis Semantico Exitoso')
-            Texto_Concatenado += 'Analisis Semantico Exitoso\n'
+            Texto_Concatenado += 'Analisis Semantico Exitoso'
         self.label_resultados.configure(text=Texto_Concatenado)
-        
+        Texto_Concatenado = ""
         
     def limpiar_textbox(self):
         self.textbox.delete("1.0", "end")
         self.label_resultados.configure(text="Resultados")
+        global Texto_Concatenado
+        Texto_Concatenado = ""
+
 
 if __name__ == "__main__":
     app = Analizador_Lexico_Sintactico_Y_Semantico()
